@@ -9,12 +9,12 @@ Ao ter uma linha preenchida, os tetraminós dessa linha
 desaparecem e o jogador ganha pontos. Ao preencher totalmente 
 a tela, o jogo é encerrado.
 
-Baseado na aplicação de [Clear Code Projects][https://github.com/clear-code-projects/pygame_tetris], o projeto 
+Baseado na [aplicação de Clear Code Projects](https://github.com/clear-code-projects/pygame_tetris), o projeto 
 foi adaptado para utilizar o paradigma funcional ao invés do 
 orientado à objeto, uma vez que foi desenvolvido em grupo - 
 o qual ainda não conhece a implementação orientada à objeto 
-na linguagem Python. Além disso, foi através do tutorial de 
-[Net Ninja][https://www.youtube.com/playlist?list=PL4cUxeGkcC9iurLoO9Mu7GqsKlxEXcf8m] que a aplicação foi desenvolvida.
+na linguagem Python. Além disso, foi através do [tutorial de 
+Net Ninja](https://www.youtube.com/playlist?list=PL4cUxeGkcC9iurLoO9Mu7GqsKlxEXcf8m) que a aplicação foi desenvolvida.
 
 O real objetivo do projeto é servir de incentivo para iniciação 
 em desenvolvimento de jogos e para praticar mais sobre a linguagem 
@@ -41,13 +41,13 @@ Python.
 
 ## Como rodar
 
-2. Baixe o projeto
-3. Descompacte
-4. Instale as dependências
+1. Baixe o projeto
+2. Descompacte
+3. Instale as dependências
     ```py
         pip install -r requirements.txt
     ```
-5. Rode o projeto
+4. Rode o projeto
     ```py
         python main.py 
     ```
