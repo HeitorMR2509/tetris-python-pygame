@@ -29,11 +29,27 @@ def main() -> None:
          COMPRIMENTO_JOGO * FRACAO_COMPRIMENTO_PONTUACAO - ESPACAMENTO)
     )
 
+
     ## Retângulo pontuação
     ret_pont = superficie_pontuacao.get_rect(
         bottomright=(
             LARGURA_JANELA - ESPACAMENTO,
             COMPRIMENTO_JANELA - ESPACAMENTO
+        )
+    )
+
+    # Criação da parte da pré-visualização de blocos
+    ## Superfície da pré-visualização
+    superficie_previsualizacao = pygame.Surface(
+        (LARGURA_BARRA_LATERAL,
+         COMPRIMENTO_JOGO * FRACAO_COMPRIMENTO_VISUALIZACAO)
+    )
+
+    ## Retângulo pré-visualização
+    ret_preview = superficie_previsualizacao.get_rect(
+        topright=(
+            LARGURA_JANELA - ESPACAMENTO,
+            ESPACAMENTO
         )
     )
 
@@ -47,6 +63,9 @@ def main() -> None:
 
         # Adiciona a superfície da pontuação na janela
         janela.blit(superficie_pontuacao, ret_pont)
+
+        # Adiciona a superfície de pré-visualização de bloco
+        janela.blit(superficie_previsualizacao, ret_preview)
 
         pygame.display.update()
 
