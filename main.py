@@ -16,10 +16,29 @@ def main() -> None:
     # Criação de um "relógio" para FPS e tempo
     relogio = pygame.time.Clock()
 
+    # Criação do jogo
+    ## Superfície do jogo
+    superficie_jogo = pygame.Surface(
+        (LARGURA_JOGO, COMPRIMENTO_JOGO)
+    )
+
+    # Criação da parte de pontuação
+    ## Superfície da pontuação
+    superficie_pontuacao = pygame.Surface(
+        (LARGURA_BARRA_LATERAL,
+         COMPRIMENTO_JOGO * FRACAO_COMPRIMENTO_PONTUACAO - ESPACAMENTO)
+    )
+
     while rodando:
 
         # Muda cor de fundo da janela
         janela.fill(CINZA)
+
+        # Adiciona a superfície do jogo na janela
+        janela.blit(superficie_jogo, (ESPACAMENTO, ESPACAMENTO))
+
+        # Adiciona a superfície da pontuação na janela
+        janela.blit(superficie_pontuacao, (ESPACAMENTO*2 + LARGURA_JOGO, ESPACAMENTO))
 
         pygame.display.update()
 
