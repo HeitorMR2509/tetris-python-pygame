@@ -29,6 +29,14 @@ def main() -> None:
          COMPRIMENTO_JOGO * FRACAO_COMPRIMENTO_PONTUACAO - ESPACAMENTO)
     )
 
+    ## Retângulo pontuação
+    ret_pont = superficie_pontuacao.get_rect(
+        bottomright=(
+            LARGURA_JANELA - ESPACAMENTO,
+            COMPRIMENTO_JANELA - ESPACAMENTO
+        )
+    )
+
     while rodando:
 
         # Muda cor de fundo da janela
@@ -38,7 +46,7 @@ def main() -> None:
         janela.blit(superficie_jogo, (ESPACAMENTO, ESPACAMENTO))
 
         # Adiciona a superfície da pontuação na janela
-        janela.blit(superficie_pontuacao, (ESPACAMENTO*2 + LARGURA_JOGO, ESPACAMENTO))
+        janela.blit(superficie_pontuacao, ret_pont)
 
         pygame.display.update()
 
