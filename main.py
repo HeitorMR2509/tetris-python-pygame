@@ -9,6 +9,9 @@ from util.Tetramino import Tetramino
 # Temporizador
 from util.Temporizador import Temporizador
 
+# Malha da superfície do jogo
+from colab1.desenhar_malha import *
+
 def main() -> None:
     pygame.init()
 
@@ -62,6 +65,10 @@ def main() -> None:
         )
     )
 
+    # Malha da superfície do jogo
+    superficie_malha, ret_jogo = \
+        desenhar_malha_setup(superficie_jogo)
+
     ## Grupo de blocos
     blocos = pygame.sprite.Group()
 
@@ -78,6 +85,9 @@ def main() -> None:
             VELOCIDADE_ATUALIZACAO_INICIAL,
             True,
             mover_para_baixo 
+        ),
+        "movimento horizontal": Temporizador(
+            TEMPO_ESPERA_MOVER
         )
     }
 
@@ -106,6 +116,13 @@ def main() -> None:
         # Cor da superfície do jogo
         superficie_jogo.fill("black")
 
+        # Superfície da malha do jogo
+        desenhar_malha_render(
+            superficie_jogo,
+            superficie_malha,
+            ret_jogo
+        )
+
         # Atualiza os temporizadores
         for temporizador in temporizadores.values():
             temporizador.atualizar()
@@ -122,6 +139,18 @@ def main() -> None:
 
         # Atualiza a superfície da janela
         pygame.display.update()
+
+        # Entrada de usuário
+        tecla = pygame.key.get_pressed()
+
+        if not temporizadores["movimento horizontal"].ativo:
+            if tecla[pygame.K_d]:
+                t.mover_horizontal(1)
+                temporizadores["movimento horizontal"].ativar()
+
+            if tecla[pygame.K_a]:
+                t.mover_horizontal(-1)
+                temporizadores["movimento horizontal"].ativar()
 
 
     # Limpa a "tralha" da biblioteca/desinicializa
