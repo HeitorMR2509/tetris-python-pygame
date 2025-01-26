@@ -1,6 +1,14 @@
 # Configurações e bibliotecas importadas
 from config import *
 
+from random import choice
+
+# Tetraminó
+from util.Tetramino import Tetramino
+
+# Temporizador
+from util.Temporizador import Temporizador
+
 def main() -> None:
     pygame.init()
 
@@ -15,6 +23,7 @@ def main() -> None:
 
     # Criação de um "relógio" para FPS e tempo
     relogio = pygame.time.Clock()
+
 
     # Criação do jogo
     ## Superfície do jogo
@@ -53,7 +62,34 @@ def main() -> None:
         )
     )
 
+    ## Grupo de blocos
+    blocos = pygame.sprite.Group()
+
+    # Tetraminó de início, escolhido aleatoriamente
+    t = Tetramino(choice(list(TETROMINOS.keys())), blocos)
+
+    # Funções de modificação do tetraminó
+    def mover_para_baixo() -> None:
+        t.mover_para_baixo()
+
+    # Temporizadores para movimentação
+    temporizadores = {
+        "movimento vertical": Temporizador(
+            VELOCIDADE_ATUALIZACAO_INICIAL,
+            True,
+            mover_para_baixo 
+        )
+    }
+
+    # Ativa o temporizador de movimento vertical
+    temporizadores["movimento vertical"].ativar()
+
+    # Laço de repetição principal do jogo
     while rodando:
+        # Eventos principais do Pygame
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                rodando = False
 
         # Muda cor de fundo da janela
         janela.fill(CINZA)
@@ -67,15 +103,26 @@ def main() -> None:
         # Adiciona a superfície de pré-visualização de bloco
         janela.blit(superficie_previsualizacao, ret_preview)
 
+        # Cor da superfície do jogo
+        superficie_jogo.fill("black")
+
+        # Atualiza os temporizadores
+        for temporizador in temporizadores.values():
+            temporizador.atualizar()
+
+        # Atualiza os blocos
+        blocos.update()
+
+        # Desenha os blocos
+        blocos.draw(superficie_jogo)
+
+        # Ritmo de atualização. None=máximo possível; e parâmetro 
+        # é o fps
+        relogio.tick()
+
+        # Atualiza a superfície da janela
         pygame.display.update()
 
-        # Ritmo de atualização. None=máximo possível e parâmetro 
-        # é o fps
-        relogio.tick(60)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                rodando = False
 
     # Limpa a "tralha" da biblioteca/desinicializa
     pygame.quit()
