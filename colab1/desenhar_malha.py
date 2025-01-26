@@ -1,32 +1,63 @@
-from settings import *
-class Game:
-    def __Init __(self):
+import pygame
+from settings import * 
 
-        # general
-        self.Surfade = pygame.Surface((GAME WIDTH, GAME HEIGHT))
-        self.display_surface = pygame.display.get_surface()
-        self.rect = self.surface.get_rect(topleft = (PADDING, PADDING)
-        
-        # lines
-        Self.line_surface = self.surface.copy()
-        self.line_surface.fill((0,255,0))
-        self.line_surface.set_colorkey((9,255,0))
-        self.line_surface.set_alpha(126)
+# Função para configurar a malha do jogo
+def desenhar_malha_setup(superficie_jogo):
+    # Criar uma superfície para a malha
+    superficie_malha = superficie_jogo.copy()
+    superficie_malha.fill((0, 255, 0))
+    superficie_malha.set_colorkey((0, 255, 0))
+    superficie_malha.set_alpha(126)
+
+    # Criar um retângulo para a superfície do jogo
+    ret_jogo = superficie_jogo.get_rect(topleft=(PADDING, PADDING))
+
+    return superficie_malha, ret_jogo
+
+# Função para desenhar a malha na tela
+def desenhar_malha_render(superficie_jogo, superficie_malha, ret_jogo):
+    # Desenhar as linhas verticais
+    for col in range(1, COLUMNS):
+        x = col * CELL_SIZE
+        pygame.draw.line(superficie_malha, LINE_COLOR, (x, 0), (x, superficie_malha.get_height()), 1)
+
+    # Desenhar as linhas horizontais
+    for row in range(1, ROWS):
+        y = row * CELL_SIZE
+        pygame.draw.line(superficie_malha, LINE_COLOR, (0, y), (superficie_malha.get_width(), y), 1)
+
+    # Renderizar a malha na superfície do jogo
+    superficie_jogo.blit(superficie_malha, (PADDING, PADDING))
+
+# Exemplo de uso
+if __name__ == "__main__":
+    pygame.init()
     
-    def draw_grid(self):
-        for col in range(1, COLUMNS):
-            x = col * CELL_SIZE
-            pygame.draw.line(self.line_surface, LINE_COLOR, (x,0), (x,self.surface.get_width(), 1))
+    # Configurações da janela do jogo
+    tela = pygame.display.set_mode((GAME_WIDTH + 2 * PADDING, GAME_HEIGHT + 2 * PADDING))
+    pygame.display.set_caption("Tetris")
+    clock = pygame.time.Clock()
 
-        for row in range(1, ROWS):
-            y = row * CELL_SIZE
-            pygame.draw.line(self.line_surface, LINE_COLOR, (0,y), (self.surface.get_width(),y))
+    # Superfície do jogo
+    superficie_jogo = pygame.Surface((GAME_WIDTH, GAME_HEIGHT))
+    superficie_malha, ret_jogo = desenhar_malha_setup(superficie_jogo)
 
-    def run(self):
+    rodando = True
+    while rodando:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                rodando = False
 
-        # drawing
-        self.surface.fill(GRAY)
+        # Preencher a superfície do jogo com a cor de fundo
+        superficie_jogo.fill(GRAY)
 
-        self.draw_grid()
-        self.display_surface.blit(self.surface, (PADDING,PADDING))
-    
+        # Renderizar a malha
+        desenhar_malha_render(superficie_jogo, superficie_malha, ret_jogo)
+
+        # Exibir tudo na tela
+        tela.fill((0, 0, 0))
+        tela.blit(superficie_jogo, (PADDING, PADDING))
+        pygame.display.flip()
+        clock.tick(60)
+
+    pygame.quit()
