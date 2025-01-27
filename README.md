@@ -1,5 +1,7 @@
 # Tetris em Python e Pygame
 
+![Imagem da aplicação terminada](./assets/app.png)
+
 [Tetris](https://pt.wikipedia.org/wiki/Tetris) é um jogo de quebra-cabeça com blocos que caem. 
 Lançado em 1985 pelo programador Alexey Pajitnov, o jogo 
 se tornou uma febre na época e possui relevância no mundo 
@@ -22,17 +24,19 @@ Python.
 
 ## Comentários sobre o desenvolvimento
 
+### HeitorMR2509
+
 Algumas partes ficaram difíceis de implementar de forma funcional ou 
-eu fiquei com preguiça mesmo (Heitor)... Pois, então, eu decidi deixar 
+eu fiquei com preguiça mesmo... Pois, então, eu decidi deixar 
 algumas classes na aplicação para simplificar o processo. (_código espaguete, KKKKK_)
 
 ## O que ainda falta?
 
-- [ ] Terminar a aplicação
-- [ ] Documentar a aplicação
-    - [ ] Comentar toda a lógica da aplicação
-    - [ ] Terminar a documentação do projeto/repositório
-        - [ ] Adicionar diagramas e imagens do projeto pronto
+- [X] Terminar a aplicação
+- [X] Documentar a aplicação
+    - [X] Comentar toda a lógica da aplicação~
+    - [X] Terminar a documentação do projeto/repositório
+        - [X] Adicionar diagramas e imagens do projeto pronto
 
 ## Tecnologias utilizadas
 
