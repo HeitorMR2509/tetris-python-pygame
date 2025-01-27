@@ -150,7 +150,7 @@ def main() -> None:
                 nonlocal velocidade_vertical_acelerada
                 nonlocal temporizadores
                 nivel_atual += 1
-                velocidade_vertical *= 1.75
+                velocidade_vertical *= 0.75
                 velocidade_vertical_acelerada = velocidade_vertical * 0.3
                 temporizadores["movimento vertical"].duracao = velocidade_vertical
 
