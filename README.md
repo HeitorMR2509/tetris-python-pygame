@@ -20,6 +20,12 @@ O real objetivo do projeto é servir de incentivo para iniciação
 em desenvolvimento de jogos e para praticar mais sobre a linguagem 
 Python.
 
+## Comentários sobre o desenvolvimento
+
+Algumas partes ficaram difíceis de implementar de forma funcional ou 
+eu fiquei com preguiça mesmo (Heitor)... Pois, então, eu decidi deixar 
+algumas classes na aplicação para simplificar o processo. (_código espaguete, KKKKK_)
+
 ## O que ainda falta?
 
 - [ ] Terminar a aplicação

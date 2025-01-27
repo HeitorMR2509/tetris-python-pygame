@@ -25,6 +25,22 @@ class Bloco(pygame.sprite.Sprite):
             topleft=self.posicao * TAMANHO_DE_CELULA
         )
 
+    # Rotaciona o bloco em torno de um bloco eixo
+    def rotacionar(self, bloco_eixo):
+        return bloco_eixo.posicao + self.posicao - (bloco_eixo.posicao).rotate(90)
+
+    # Detecta se a posição do bloco está 
+    # fora da área de jogo determinada nas configurações
+    # ou se está colidindo com outro bloco
+    def colisao_horizontal(self, x, blocos_colisao):
+        return (not 0 <= x < COLUNAS) or blocos_colisao[int(self.posicao.y)][x]
+
+    # Detecta se o bloco está fora da área de jogo 
+    # na vertical ou está colidindo com outro bloco
+    def colisao_vertical(self, y, blocos_colisao):
+        return (not 0 <= y < LINHAS) or blocos_colisao[y][int(self.posicao.x)]
+
+    # Atualiza a posição do bloco
     def update(self):
         self.rect.x = self.posicao.x * TAMANHO_DE_CELULA
         self.rect.y = self.posicao.y * TAMANHO_DE_CELULA

@@ -72,12 +72,54 @@ def main() -> None:
     ## Grupo de blocos
     blocos = pygame.sprite.Group()
 
+    # Blocos para colisão de tetraminós
+    blocos_colisao = [[0 for x in range(COLUNAS)] for y in range(LINHAS)]
+
     # Tetraminó de início, escolhido aleatoriamente
-    t = Tetramino(choice(list(TETROMINOS.keys())), blocos)
+    t = Tetramino(choice(list(TETROMINOS.keys())), blocos, blocos_colisao)
+
+    # Função que cria um novo tetraminó
+    def criar_novo_tetramino() -> None:
+        nonlocal blocos_colisao
+
+        # Checar linhas completas
+        linhas_deletar = []
+
+        # Adiciona as linhas que podem ser deletadas
+        for i, linha in enumerate(blocos_colisao):
+            if all(linha):
+                linhas_deletar.append(i)
+
+        # Se existir uma linha para deletar
+        if linhas_deletar:
+            for linha_deletar in linhas_deletar:
+                # Deleta a linha inteira
+                for bloco in blocos_colisao[linha_deletar]:
+                    bloco.kill()
+
+                # Mover os blocos para baixo
+                for linha in blocos_colisao:
+                    for bloco in linha:
+                        if bloco and bloco.posicao.y < linha_deletar:
+                            bloco.posicao.y += 1
+
+
+            # Reconstruir os blocos de colisao para atualizar 
+            # o campo invisível lógico do jogo
+            blocos_colisao = [[0 for x in range(COLUNAS)] for y in range(LINHAS)]
+
+            for bloco in blocos:
+                blocos_colisao[int(bloco.posicao.y)][int(bloco.posicao.x)] = bloco
+
+
+        # Cria um novo tetraminó, o qual está 
+        # em uma variável no escopo da função pai
+        nonlocal t
+        t = Tetramino(choice(list(TETROMINOS.keys())), blocos, blocos_colisao)
 
     # Funções de modificação do tetraminó
     def mover_para_baixo() -> None:
-        t.mover_para_baixo()
+        t.mover_para_baixo(criar_novo_tetramino)
 
     # Temporizadores para movimentação
     temporizadores = {
@@ -88,6 +130,9 @@ def main() -> None:
         ),
         "movimento horizontal": Temporizador(
             TEMPO_ESPERA_MOVER
+        ),
+        "rotacionar": Temporizador(
+            TEMPO_ESPERA_ROTACIONAR
         )
     }
 
@@ -143,6 +188,7 @@ def main() -> None:
         # Entrada de usuário
         tecla = pygame.key.get_pressed()
 
+        ## Movimentação do tetraminó
         if not temporizadores["movimento horizontal"].ativo:
             if tecla[pygame.K_d]:
                 t.mover_horizontal(1)
@@ -151,6 +197,12 @@ def main() -> None:
             if tecla[pygame.K_a]:
                 t.mover_horizontal(-1)
                 temporizadores["movimento horizontal"].ativar()
+
+        ## Rotacionar o tetraminó
+        if not temporizadores["rotacionar"].ativo:
+            if tecla[pygame.K_w]:
+                t.rotacionar()
+                temporizadores["rotacionar"].ativar()
 
 
     # Limpa a "tralha" da biblioteca/desinicializa
