@@ -14,10 +14,19 @@ class Tetramino:
         self.cor = TETROMINOS[forma]["cor"]
 
         # Blocos do tetraminó
-        self.blocos = [Bloco(grupo, posicao, self.cor) for posicao in self.posicao_blocos]
+        self.blocos = [Bloco(None, posicao, self.cor) for posicao in self.posicao_blocos]
 
         # Blocos para colisão
         self.blocos_colisao = blocos_colisao
+
+    # Atualiza a lista de blocos de colisão
+    def add_blocos_colisao(self, blocos_colisao):
+        self.blocos_colisao = blocos_colisao
+
+    # Adiciona os blocos ao grupo desejado
+    def add_grupo(self, grupo):
+        for bloco in self.blocos:
+            bloco.add(grupo)
 
     # Rotaciona o tetraminó
     def rotacionar(self):
@@ -42,15 +51,17 @@ class Tetramino:
 
     def mover_para_baixo(self, func=None):
         # Checa se o tetraminó está fora da área de jogo
-        if not self.colisao_proximo_movimento_vertical(self.blocos, 1):
+        if not self.colisao_proximo_movimento_vertical(self.blocos, 1, ):
             # Move os blocos do tetraminó
             for bloco in self.blocos:
                 bloco.posicao.y += 1
         else:
+            # Adiciona blocos para colisão interna do tetraminó
+            for bloco in self.blocos:
+                self.blocos_colisao[int(bloco.posicao.y)][int(bloco.posicao.x)] = bloco
+
             # Cria novo tetraminó
             if func:
-                for bloco in self.blocos:
-                    self.blocos_colisao[int(bloco.posicao.y)][int(bloco.posicao.x)] = bloco
                 func()
 
     def mover_horizontal(self, amount):
@@ -61,7 +72,6 @@ class Tetramino:
             # por uma certa quantidade amount
             for bloco in self.blocos:
                 bloco.posicao.x += amount
-
 
     def colisao_proximo_movimento_vertical(self, blocos, amount):
         # Tetraminó imaginário para detectar saída da área 

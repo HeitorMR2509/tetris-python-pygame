@@ -4,7 +4,10 @@ class Bloco(pygame.sprite.Sprite):
     def __init__(self, grupo, posicao, cor):
         # Inicia o construtor da classe Sprite e
         # adiciona o bloco ao grupo de blocos
-        super().__init__(grupo)
+        if grupo:
+            super().__init__(grupo)
+        else:
+            super().__init__()
 
         # Superfície do bloco
         self.image = pygame.Surface(
@@ -27,7 +30,7 @@ class Bloco(pygame.sprite.Sprite):
 
     # Rotaciona o bloco em torno de um bloco eixo
     def rotacionar(self, bloco_eixo):
-        return bloco_eixo.posicao + self.posicao - (bloco_eixo.posicao).rotate(90)
+        return bloco_eixo.posicao + (self.posicao - bloco_eixo.posicao).rotate(90)
 
     # Detecta se a posição do bloco está 
     # fora da área de jogo determinada nas configurações
